@@ -86,6 +86,8 @@ namespace PdfiumViewer.Demo
 
             _showBookmarks.Checked = pdfViewer1.ShowBookmarks;
             _showToolbar.Checked = pdfViewer1.ShowToolbar;
+
+            pdfViewer1.Renderer.CursorMode = PdfViewerCursorMode.TextSelection;
         }
 
         private PdfDocument OpenDocument(string fileName)

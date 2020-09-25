@@ -38,6 +38,8 @@ namespace PdfiumViewer
         private bool _isSelectingText = false;
         private MouseState _cachedMouseState = null;
         private TextSelectionState _textSelectionState = null;
+        private List<RectangleRenderInfo> _renderRectangles;
+
 
         /// <summary>
         /// The associated PDF document.
@@ -231,6 +233,8 @@ namespace PdfiumViewer
 
             Markers = new PdfMarkerCollection();
             Markers.CollectionChanged += Markers_CollectionChanged;
+
+            _renderRectangles = new List<RectangleRenderInfo>();
         }
 
         private void Markers_CollectionChanged(object sender, EventArgs e)
@@ -768,6 +772,8 @@ namespace PdfiumViewer
                     var selectionInfo = _textSelectionState;
                     if (selectionInfo != null)
                         DrawTextSelection(e.Graphics, page, selectionInfo.GetNormalized());
+
+                    DrawRectangleSelection(e.Graphics, page);
                 }
             }
 
@@ -775,6 +781,73 @@ namespace PdfiumViewer
                 _visiblePageStart = 0;
             if (_visiblePageEnd == -1)
                 _visiblePageEnd = Document.PageCount - 1;
+        }
+
+        private void DrawRectangleSelection(Graphics graphics, int page)
+        {
+            if (_renderRectangles == null || _renderRectangles.Count < 1)
+                return;
+            foreach(var renderInfo in _renderRectangles)
+            {
+                if(page == renderInfo.Page)
+                {
+                    Region region = null;
+                    foreach (var rectangle in renderInfo.Rectangles)
+                    {
+                        
+                        if (region == null)
+                            region = new Region(BoundsFromPdf(rectangle));
+                        else
+                            region.Union(BoundsFromPdf(rectangle));
+                    }
+
+                    if(region != null)
+                    {
+                        RectangleF rectF = region.GetBounds(graphics);
+                        //Rectangle rect = new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
+
+                        //graphics.DrawRectangle(renderInfo.Pen, rect);
+                        graphics.DrawRectangle(renderInfo.Pen, rectF.X, rectF.Y, rectF.Width, rectF.Height);
+                    }
+                    
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets new list of rendered rectangles.
+        /// </summary>
+        public void SetRectangles(List<RectangleRenderInfo> rectangles)
+        {
+            if (rectangles == null || rectangles.Count == 0)
+                return;
+
+            ClearRectangles();
+            AddRectangles(rectangles);
+        }
+
+        /// <summary>
+        /// Clears rendered rectangles.
+        /// </summary>
+        public void ClearRectangles()
+        {
+            if (_renderRectangles == null || _renderRectangles.Count == 0)
+                return;
+
+            _renderRectangles.Clear();
+            Invalidate();
+        }
+
+        /// <summary>
+        /// Adds rectangles to be rendered.
+        /// </summary>
+        public void AddRectangles(List<RectangleRenderInfo> rectangles)
+        {
+            if (rectangles == null || rectangles.Count == 0)
+                return;
+
+            _renderRectangles.AddRange(rectangles);
+            Invalidate();
         }
 
         private void DrawTextSelection(Graphics graphics, int page, TextSelectionState state)
@@ -1374,6 +1447,13 @@ namespace PdfiumViewer
 
                 return this;
             }
+        }
+
+        public class RectangleRenderInfo
+        {
+            public int Page { get; set; }
+            public List<PdfRectangle> Rectangles { get; set; }
+            public Pen Pen { get; set; }
         }
     }
 }

@@ -179,7 +179,7 @@ namespace PdfiumViewer.Demo
             this.toolStripMenuItem6,
             this.informationToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // findToolStripMenuItem
@@ -247,28 +247,28 @@ namespace PdfiumViewer.Demo
             // rotate0ToolStripMenuItem
             // 
             this.rotate0ToolStripMenuItem.Name = "rotate0ToolStripMenuItem";
-            this.rotate0ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.rotate0ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rotate0ToolStripMenuItem.Text = "Rotate 0°";
             this.rotate0ToolStripMenuItem.Click += new System.EventHandler(this.rotate0ToolStripMenuItem_Click);
             // 
             // rotate90ToolStripMenuItem
             // 
             this.rotate90ToolStripMenuItem.Name = "rotate90ToolStripMenuItem";
-            this.rotate90ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.rotate90ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rotate90ToolStripMenuItem.Text = "Rotate 90°";
             this.rotate90ToolStripMenuItem.Click += new System.EventHandler(this.rotate90ToolStripMenuItem_Click);
             // 
             // rotate180ToolStripMenuItem
             // 
             this.rotate180ToolStripMenuItem.Name = "rotate180ToolStripMenuItem";
-            this.rotate180ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.rotate180ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rotate180ToolStripMenuItem.Text = "Rotate 180°";
             this.rotate180ToolStripMenuItem.Click += new System.EventHandler(this.rotate180ToolStripMenuItem_Click);
             // 
             // rotate270ToolStripMenuItem
             // 
             this.rotate270ToolStripMenuItem.Name = "rotate270ToolStripMenuItem";
-            this.rotate270ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.rotate270ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rotate270ToolStripMenuItem.Text = "Rotate 270°";
             this.rotate270ToolStripMenuItem.Click += new System.EventHandler(this.rotate270ToolStripMenuItem_Click);
             // 
@@ -335,6 +335,7 @@ namespace PdfiumViewer.Demo
             // 
             // _page
             // 
+            this._page.Font = new System.Drawing.Font("Segoe UI", 9F);
             this._page.Name = "_page";
             this._page.Size = new System.Drawing.Size(100, 25);
             this._page.KeyDown += new System.Windows.Forms.KeyEventHandler(this._page_KeyDown);
@@ -377,6 +378,7 @@ namespace PdfiumViewer.Demo
             // 
             // _zoom
             // 
+            this._zoom.Font = new System.Drawing.Font("Segoe UI", 9F);
             this._zoom.Name = "_zoom";
             this._zoom.Size = new System.Drawing.Size(100, 25);
             this._zoom.KeyDown += new System.Windows.Forms.KeyEventHandler(this._zoom_KeyDown);
@@ -478,7 +480,7 @@ namespace PdfiumViewer.Demo
             this._showToolbar.Image = ((System.Drawing.Image)(resources.GetObject("_showToolbar.Image")));
             this._showToolbar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._showToolbar.Name = "_showToolbar";
-            this._showToolbar.Size = new System.Drawing.Size(83, 22);
+            this._showToolbar.Size = new System.Drawing.Size(82, 22);
             this._showToolbar.Text = "Show Toolbar";
             this._showToolbar.Click += new System.EventHandler(this._hideToolbar_Click);
             // 
