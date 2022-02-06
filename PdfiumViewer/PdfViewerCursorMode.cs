@@ -7,6 +7,8 @@ namespace PdfiumViewer
     public enum PdfViewerCursorMode
     {
         Pan,
-        TextSelection
+        TextSelection,
+        RectangleSelection,
+        Point
     }
 }

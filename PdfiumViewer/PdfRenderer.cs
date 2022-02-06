@@ -34,7 +34,7 @@ namespace PdfiumViewer
         private DragState _dragState;
         private PdfRotation _rotation;
         private List<IPdfMarker>[] _markers;
-        private PdfViewerCursorMode _cursorMode = PdfViewerCursorMode.Pan;
+        private PdfViewerCursorMode _cursorMode = PdfViewerCursorMode.Point;
         private bool _isSelectingText = false;
         private MouseState _cachedMouseState = null;
         private TextSelectionState _textSelectionState = null;
@@ -773,10 +773,12 @@ namespace PdfiumViewer
                     if (selectionInfo != null)
                         DrawTextSelection(e.Graphics, page, selectionInfo.GetNormalized());
 
-                    DrawRectangle(e.Graphics, page);
+                    
 
                     //DrawRectangleSelection(e.Graphics, page);
                 }
+                if(DrawRectangle != null)
+                    DrawRectangle(e.Graphics, page);
             }
 
             if (_visiblePageStart == -1)
@@ -800,7 +802,7 @@ namespace PdfiumViewer
         //            Region region = null;
         //            foreach (var rectangle in renderInfo.Rectangles)
         //            {
-                        
+
         //                if (region == null)
         //                    region = new Region(BoundsFromPdf(rectangle));
         //                else
@@ -815,7 +817,7 @@ namespace PdfiumViewer
         //                //graphics.DrawRectangle(renderInfo.Pen, rect);
         //                graphics.DrawRectangle(renderInfo.Pen, rectF.X, rectF.Y, rectF.Width, rectF.Height);
         //            }
-                    
+
         //        }
         //    }
         //}
@@ -858,6 +860,7 @@ namespace PdfiumViewer
 
         private void DrawTextSelection(Graphics graphics, int page, TextSelectionState state)
         {
+            return;
             if (state.EndPage < 0 || state.EndIndex < 0)
                 return;
 
@@ -928,7 +931,7 @@ namespace PdfiumViewer
         }
 
         /// <summary>
-        /// Called whent he cursor changes.
+        /// Called when the cursor changes.
         /// </summary>
         /// <param name="e">The event args.</param>
         protected override void OnSetCursor(SetCursorEventArgs e)
@@ -965,6 +968,16 @@ namespace PdfiumViewer
                         e.Cursor = Cursors.IBeam;
                         return;
                     }
+                }
+                else if (_cursorMode == PdfViewerCursorMode.RectangleSelection)
+                {
+                    e.Cursor = Cursors.Cross;
+                    return;
+                }
+                else if (_cursorMode == PdfViewerCursorMode.TextSelection)
+                {
+                    e.Cursor = Cursors.Default;
+                    return;
                 }
             }
 
