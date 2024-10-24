@@ -460,6 +460,12 @@ namespace PdfiumViewer
             UpdateScrollbars();
         }
 
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+            throw new NotImplementedException();
+        }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             switch ((e.KeyData) & Keys.KeyCode)
